@@ -22,6 +22,7 @@ from distutils.dir_util import copy_tree
 from os.path import dirname, join, expanduser
 import datetime
 from colorama import Fore, Back, Style
+import time
 from rfeed import *
 
 class Tube4Droid:
@@ -45,18 +46,25 @@ class Tube4Droid:
         config.read([join(self.__USER_CONFIG_DIR, 'tube4droid.conf'), expanduser('~/.tube4droid.conf'), 'tube4droid.conf'])
         self.__cwd = os.getcwd()
         self.__playlist = config.get('Config', 'playlist')
+        self.__datadir = config.get('Config', 'mediadir')
+        self.__serverdir = config.get('Config', 'rssdir')
 
     def main(self):
         signal.signal(signal.SIGINT, self._exit_gracefully)
+        time.sleep(60)
 
 
     def getArguments(self, argv):
         self._checkPythonVersion();
         parser = argparse.ArgumentParser(prog='tube4droid',  description='Downloads the specififed youtoube list to a local directory and creates and Podcast RSS feed which can be susbscribed to get offline youtube on Android devices',  epilog='And that is how you use me')
         parser.add_argument("-p",  "--playlist",  help="youtoube playlist to mirror",  required=False, dest='playlist')
+        parser.add_argument("-d",  "--datadir",  help="where downloaded files get stored",  required=False, dest='datadir')
+        parser.add_argument("-s",  "--serverdir",  help="where to put the created RSS feed file",  required=False, dest='serverdir')
 
         args = parser.parse_args(argv)
         self.__playlist = args.playlist
+        self.__datadir = args.datadir
+        self.__serverdir = args.serverdir
 
         self.main()
         sys.exit(0)
