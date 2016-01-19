@@ -23,6 +23,7 @@ from os.path import dirname, join, expanduser
 import datetime
 from colorama import Fore, Back, Style
 import time
+import youtube_dl
 from rfeed import *
 
 class Tube4Droid:
@@ -51,7 +52,15 @@ class Tube4Droid:
 
     def main(self):
         signal.signal(signal.SIGINT, self._exit_gracefully)
-        time.sleep(60)
+        self.downloadVideos()
+        self.createFeed()
+
+
+    def downloadVideos(self):
+        """Downloads the videos from the selected playlist to the specified datadir"""
+
+    def createFeed(self):
+        """Creates a new RSS feed containig all files present in the datadir folder"""
 
 
     def getArguments(self, argv):
