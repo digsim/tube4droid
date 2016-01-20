@@ -24,7 +24,7 @@ def read(fname):
 
 
 setup(
-    name="feedcreator",
+    name="tube4droid",
     version="1.0.1",
     author="Andreas Ruppen",
     author_email="***REMOVED***",
@@ -35,7 +35,7 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     entry_points={
         'console_scripts': [
-            't4d=FeedCreator:main',
+            'tube4droid=FeedCreator:main',
         ],
     },
     cmdclass=cmdclass,
@@ -50,6 +50,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: POSIX',
+        'Operating System :: Microsoft :: Windows',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
