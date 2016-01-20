@@ -98,6 +98,14 @@ class Tube4Droid:
                 tags = itemdata['tags']
                 thumbnail = itemdata['thumbnail']
                 author = itemdata['uploader']
+                itunes_item = iTunesItem(
+                    author = author,
+                    image = thumbnail,
+                    duration = duration,
+                    explicit = "clean",
+                    #subtitle = "The subtitle of the podcast episode",
+                    summary = description
+                )
                 item = Item(
                     title=fulltitle,
                     link=self.__serveruri+filename,
@@ -105,16 +113,28 @@ class Tube4Droid:
                     author=author,
                     guid=Guid(self.__serveruri+filename),
                     pubDate=datetime.datetime(int(uploaddate[0:4]), int(uploaddate[4:6]), int(uploaddate[6:8]), 10, 00),
-                    categories=tags
+                    categories=tags,
+                    extensions = [itunes_item]
                 )
                 rssitems.append(item)
+        itunes = iTunes(
+            author = "Andreas Ruppen",
+            subtitle = "Offline Youtube Movies for Podcatcher Software",
+            summary = "Liber8Youtube",
+            image = "http://www.example.com/artwork.jpg",
+            explicit = "clean",
+            categories = iTunesCategory(name = 'Technology', subcategory = 'Software How-To'),
+            owner = iTunesOwner(name = 'Andreas Ruppen', email = '***REMOVED***')
+        )
+
         feed = Feed(
             title="Andys Podcatcher",
             link=self.__serveruri+"rss",
             description = "Offline Youtube Movies for Podcatcher Software",
             language = "en-US",
             lastBuildDate = datetime.datetime.now(),
-            items = rssitems
+            items = rssitems,
+            extensions = [itunes]
         )
         rssfile = open(os.path.join(self.__serverdir, 'rss'), 'w')
         rssfile.write(feed.rss())
