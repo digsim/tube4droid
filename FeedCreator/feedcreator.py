@@ -18,6 +18,7 @@ except ImportError:
 from os.path import dirname, join, expanduser
 import datetime
 from colorama import Fore, Back, Style
+import mimetypes
 import youtube_dl
 import json
 import glob
@@ -96,7 +97,8 @@ class Tube4Droid:
                 duration = itemdata['duration']
                 fulltitle = itemdata['fulltitle']
                 tags = itemdata['tags']
-                thumbnail = itemdata['thumbnail']
+                #thumbnail = itemdata['thumbnail']
+                thumbnail = self.__serveruri+os.path.splitext(os.path.basename(filename))[0]+'.jpg'
                 author = itemdata['uploader']
                 itunes_item = iTunesItem(
                     author = author,
@@ -108,8 +110,8 @@ class Tube4Droid:
                 )
                 enclosure = Enclosure(
                     url = self.__serveruri+filename,
-                    length=121034291,
-                    type='video/mp4'
+                    length=duration,
+                    type=mimetypes.guess_type(itemdata['_filename']) or 'video/mp4'
                 )
                 item = Item(
                     title=fulltitle,
