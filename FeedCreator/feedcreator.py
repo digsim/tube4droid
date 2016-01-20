@@ -91,14 +91,12 @@ class Tube4Droid:
             with open(meta) as json_data:
                 itemdata = json.load(json_data)
                 json_data.close()
-                #self.__log.debug(itemdata)
                 uploaddate =  itemdata['upload_date']
                 filename = os.path.relpath(itemdata['_filename'], self.__datadir)
                 description = itemdata['description']
                 duration = itemdata['duration']
                 fulltitle = itemdata['fulltitle']
                 tags = itemdata['tags']
-                #thumbnail = itemdata['thumbnail']
                 thumbnail = self.__serveruri+os.path.splitext(os.path.basename(filename))[0]+'.jpg'
                 author = itemdata['uploader']
                 itunes_item = iTunesItem(
