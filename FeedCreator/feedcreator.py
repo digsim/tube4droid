@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import sys
 import os
-import getopt
 import shutil
 import signal
 import logging.config
@@ -11,20 +10,14 @@ if float(sys.version[:3])<3.0:
     import ConfigParser
 else:
     import configparser as ConfigParser
-import subprocess
-from subprocess import STDOUT
 try:
     from subprocess import DEVNULL # py3k
 except ImportError:
     import os
     DEVNULL = open(os.devnull, 'wb')
-from pkg_resources import resource_filename
-from distutils.dir_util import copy_tree
 from os.path import dirname, join, expanduser
 import datetime
 from colorama import Fore, Back, Style
-import time
-import pprint
 import youtube_dl
 import json
 import glob
