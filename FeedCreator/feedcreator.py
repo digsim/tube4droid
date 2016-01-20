@@ -106,6 +106,11 @@ class Tube4Droid:
                     #subtitle = "The subtitle of the podcast episode",
                     summary = description
                 )
+                enclosure = Enclosure(
+                    url = self.__serveruri+filename,
+                    length=121034291,
+                    type='video/mp4'
+                )
                 item = Item(
                     title=fulltitle,
                     link=self.__serveruri+filename,
@@ -114,7 +119,8 @@ class Tube4Droid:
                     guid=Guid(self.__serveruri+filename),
                     pubDate=datetime.datetime(int(uploaddate[0:4]), int(uploaddate[4:6]), int(uploaddate[6:8]), 10, 00),
                     categories=tags,
-                    extensions = [itunes_item]
+                    extensions = [itunes_item],
+                    enclosure=enclosure
                 )
                 rssitems.append(item)
         itunes = iTunes(
