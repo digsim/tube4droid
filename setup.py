@@ -25,7 +25,7 @@ def read(fname):
 
 setup(
     name="feedcreator",
-    version="1.0.0",
+    version="1.0.1",
     author="Andreas Ruppen",
     author_email="***REMOVED***",
     description="Creates an RSS feed from a youtoube playlist",
