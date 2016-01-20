@@ -25,7 +25,7 @@ def read(fname):
 
 setup(
     name="tube4droid",
-    version="1.0.1",
+    version="1.0.2",
     author="Andreas Ruppen",
     author_email="***REMOVED***",
     description="Creates an RSS feed from a youtoube playlist",
