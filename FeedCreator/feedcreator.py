@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import sys
 import os
 import getopt
@@ -23,7 +24,10 @@ from os.path import dirname, join, expanduser
 import datetime
 from colorama import Fore, Back, Style
 import time
+import pprint
 import youtube_dl
+import json
+import glob
 from rfeed import *
 
 class Tube4Droid:
@@ -49,18 +53,78 @@ class Tube4Droid:
         self.__playlist = config.get('Config', 'playlist')
         self.__datadir = config.get('Config', 'mediadir')
         self.__serverdir = config.get('Config', 'rssdir')
+        self.__serveruri = config.get('Config', 'serveruri')
+
+        self.ydl_opts = {
+            #'format': 'bestaudio/best',
+            #'postprocessors': [{
+            #    'key': 'FFmpegExtractAudio',
+            #    'preferredcodec': 'mp3',
+            #    'preferredquality': '192',
+            #}],
+            'username': '***REMOVED***',
+            'password': '***REMOVED***',
+            'simulate': 'true',
+            'outtmpl': os.path.join(self.__datadir,'%(title)s.%(ext)s'),
+            'restrictfilenames': 'true',
+            'playliststart': 1,
+            'writeinfojson': 'true',
+            'writethumbnail': 'true',
+            'call_home': 'true',
+            'logger': self.__log,
+            'progress_hooks': [self._my_hook],
+        }
 
     def main(self):
         signal.signal(signal.SIGINT, self._exit_gracefully)
-        self.downloadVideos()
+        #self.downloadVideos()
         self.createFeed()
 
 
     def downloadVideos(self):
         """Downloads the videos from the selected playlist to the specified datadir"""
+        with youtube_dl.YoutubeDL(self.ydl_opts) as ydl:
+            ydl.download(['https://www.youtube.com/playlist?list=PLUeWws_6XlvfxEcYrDIVyqTsaWc4g7UGT'])
 
     def createFeed(self):
         """Creates a new RSS feed containig all files present in the datadir folder"""
+        self.__log.info(self.__datadir)
+        rssitems = []
+        metafiles = os.path.join(self.__datadir,"*.json")
+        for meta in glob.glob(metafiles):
+            with open(meta) as json_data:
+                itemdata = json.load(json_data)
+                json_data.close()
+                #self.__log.debug(itemdata)
+                uploaddate =  itemdata['upload_date']
+                filename = os.path.relpath(itemdata['_filename'], self.__datadir)
+                description = itemdata['description']
+                duration = itemdata['duration']
+                fulltitle = itemdata['fulltitle']
+                tags = itemdata['tags']
+                thumbnail = itemdata['thumbnail']
+                author = itemdata['uploader']
+                item = Item(
+                    title=fulltitle,
+                    link=self.__serveruri+filename,
+                    description=description,
+                    author=author,
+                    guid=Guid(self.__serveruri+filename),
+                    pubDate=datetime.datetime(int(uploaddate[0:4]), int(uploaddate[4:6]), int(uploaddate[6:8]), 10, 00),
+                    categories=tags
+                )
+                rssitems.append(item)
+        feed = Feed(
+            title="Andys Podcatcher",
+            link=self.__serveruri+"rss",
+            description = "Offline Youtube Movies for Podcatcher Software",
+            language = "en-US",
+            lastBuildDate = datetime.datetime.now(),
+            items = rssitems
+        )
+        rssfile = open(os.path.join(self.__serverdir, 'rss'), 'w')
+        rssfile.write(feed.rss())
+
 
 
     def getArguments(self, argv):
@@ -71,12 +135,18 @@ class Tube4Droid:
         parser.add_argument("-s",  "--serverdir",  help="where to put the created RSS feed file",  required=False, dest='serverdir')
 
         args = parser.parse_args(argv)
-        self.__playlist = args.playlist
-        self.__datadir = args.datadir
-        self.__serverdir = args.serverdir
+        self.__playlist = args.playlist or self.__playlist
+        self.__datadir = args.datadir or self.__datadir
+        self.__serverdir = args.serverdir or self.__serverdir
 
         self.main()
         sys.exit(0)
+
+    def _my_hook(self, d):
+        if d['status'] == 'finished':
+            print('Done downloading, now converting ...')
+        else:
+            print('ongoing')
 
     def _checkPythonVersion(self):
         if float(sys.version[:3])<3.0:
