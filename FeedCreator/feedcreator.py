@@ -77,7 +77,7 @@ class Tube4Droid:
 
     def main(self):
         signal.signal(signal.SIGINT, self._exit_gracefully)
-        #self.downloadVideos()
+        self.downloadVideos()
         self.createFeed()
 
 
