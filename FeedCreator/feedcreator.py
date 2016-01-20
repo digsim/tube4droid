@@ -111,7 +111,7 @@ class Tube4Droid:
                 enclosure = Enclosure(
                     url = self.__serveruri+filename,
                     length=duration,
-                    type=mimetypes.guess_type(itemdata['_filename']) or 'video/mp4'
+                    type=mimetypes.guess_type(itemdata['_filename'])[0] or 'video/mp4'
                 )
                 item = Item(
                     title=fulltitle,
