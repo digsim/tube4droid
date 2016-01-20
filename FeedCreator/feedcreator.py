@@ -57,7 +57,7 @@ class Tube4Droid:
             #}],
             'username': '***REMOVED***',
             'password': '***REMOVED***',
-            'simulate': 'true',
+            #'simulate': 'true',
             'outtmpl': os.path.join(self.__datadir,'%(title)s.%(ext)s'),
             'restrictfilenames': 'true',
             'playliststart': 1,
@@ -85,6 +85,7 @@ class Tube4Droid:
         rssitems = []
         metafiles = os.path.join(self.__datadir,"*.json")
         for meta in glob.glob(metafiles):
+            self.__log.info("Processing item "+meta)
             with open(meta) as json_data:
                 itemdata = json.load(json_data)
                 json_data.close()
@@ -137,9 +138,7 @@ class Tube4Droid:
 
     def _my_hook(self, d):
         if d['status'] == 'finished':
-            print('Done downloading, now converting ...')
-        else:
-            print('ongoing')
+            self.__log.info('Done downloading, now converting ...')
 
     def _checkPythonVersion(self):
         if float(sys.version[:3])<3.0:
