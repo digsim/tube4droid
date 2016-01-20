@@ -60,18 +60,18 @@ cat files.txt |sudo xargs rm -rf
 
 First find the installed package with pip and the uninstall it
 ```
-✔ ~/Documents/Programming/Python/tube4Android [master|✚ 2]
-18:59 $ pip freeze |grep tube
-tube4droid==0.9
+✔ ~/Documents/Programming/Python/tube4Android [master|✚ 1]
+19:02 $ pip3 freeze |grep feedcreator
+feedcreator==0.9
 
-✔ ~/Documents/Programming/Python/tube4Android [master|✚ 2]
-19:00 $ sudo -H pip uninstall tube4droid
-Uninstalling tube4droid-0.9:
-  /Library/Python/2.7/site-packages/tube4droid-0.9-py2.7.egg
+✔ ~/Documents/Programming/Python/tube4Android [master|✚ 1]
+19:02 $ sudo pip3 uninstall feedcreator
+Uninstalling feedcreator-0.9:
+  /usr/local/lib/python3.5/site-packages/feedcreator-0.9-py3.5.egg
 Proceed (y/n)? y
-  Successfully uninstalled tube4droid-0.9
+  Successfully uninstalled feedcreator-0.9
 ✔ ~/Documents/Programming/Python/tube4Android [master|✚ 2]
-19:00 $
+19:03 $
 ```
 
 
