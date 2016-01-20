@@ -78,7 +78,8 @@ class Tube4Droid:
     def downloadVideos(self):
         """Downloads the videos from the selected playlist to the specified datadir"""
         with youtube_dl.YoutubeDL(self.ydl_opts) as ydl:
-            ydl.download(['https://www.youtube.com/playlist?list=PLUeWws_6XlvfxEcYrDIVyqTsaWc4g7UGT'])
+            #ydl.download(['https://www.youtube.com/playlist?list=PLUeWws_6XlvfxEcYrDIVyqTsaWc4g7UGT'])
+            ydl.download([self.__playlist])
 
     def createFeed(self):
         """Creates a new RSS feed containig all files present in the datadir folder"""
