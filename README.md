@@ -73,6 +73,11 @@ Proceed (y/n)? y
 ✔ ~/Documents/Programming/Python/tube4Android [master|✚ 2]
 19:03 $
 ```
+# Configuration
 
+Upon the first launch, the script creates the ~/.Tube4Droid/ directory containing:
+* logging.conf where the logger is configured
+* tube4droid.conf where the general configuration is stored. Adapt at least the <serveruri>, <mediadir>, <rssdir> and <playlist> properties to get started 
 
+You need a running web server from which the dowloaded files can be saved later on. Therefore, the <mediadir> and <rssdir> properties could point to, for example, {{/var/www/rss/}} whereas  the <serveruri> could be {{http://example.com/rss}} given that the webserver is configured in such a way that this URI point to the {{/var/www/rss}} directory.
 
