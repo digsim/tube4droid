@@ -48,6 +48,8 @@ class Tube4Droid:
         self.__datadir = config.get('Config', 'mediadir')
         self.__serverdir = config.get('Config', 'rssdir')
         self.__serveruri = config.get('Config', 'serveruri')
+        self.__ytusername = config.get('Youtube', 'username')
+        self.__ytpassword = config.get('Youtube', 'password')
 
         self.ydl_opts = {
             #'format': 'bestaudio/best',
@@ -56,8 +58,8 @@ class Tube4Droid:
             #    'preferredcodec': 'mp3',
             #    'preferredquality': '192',
             #}],
-            'username': '***REMOVED***',
-            'password': '***REMOVED***',
+            'username': self.__ytusername,
+            'password': self.__ytpassword,
             #'simulate': 'true',
             'outtmpl': os.path.join(self.__datadir,'%(title)s.%(ext)s'),
             'restrictfilenames': 'true',
@@ -131,7 +133,7 @@ class Tube4Droid:
             image = "http://www.example.com/artwork.jpg",
             explicit = "clean",
             categories = iTunesCategory(name = 'Technology', subcategory = 'Software How-To'),
-            owner = iTunesOwner(name = 'Andreas Ruppen', email = '***REMOVED***')
+            owner = iTunesOwner(name = 'Andreas Ruppen', email = 'andreas.ruppen@gmail.com')
         )
 
         feed = Feed(

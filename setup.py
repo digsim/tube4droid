@@ -27,7 +27,7 @@ setup(
     name="tube4droid",
     version="1.0.3",
     author="Andreas Ruppen",
-    author_email="***REMOVED***",
+    author_email="andreas.ruppen@gmail.com",
     description="Creates an RSS feed from a youtoube playlist",
     license="Apache",
     keywords="youtube, iTunes, RSS, podcast",
