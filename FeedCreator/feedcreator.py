@@ -61,7 +61,7 @@ class Tube4Droid:
             'username': self.__ytusername,
             'password': self.__ytpassword,
             #'simulate': 'true',
-            'outtmpl': os.path.join(self.__datadir,'%(title)s.%(ext)s'),
+            'outtmpl': os.path.join(self.__datadir,'%(autonumber)_%(title)s.%(ext)s'),
             'restrictfilenames': 'true',
             'playliststart': 1,
             'writeinfojson': 'true',
