@@ -41,6 +41,7 @@ setup(
     cmdclass=cmdclass,
     data_files=data_files,
     install_requires=reqs,
+    dependency_links=["git+https://github.com/svpino/rfeed.git#egg=rfeed"],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
