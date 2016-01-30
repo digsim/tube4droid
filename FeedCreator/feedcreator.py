@@ -42,14 +42,17 @@ class Tube4Droid:
             config = ConfigParser.SafeConfigParser()
         else:
             config = ConfigParser.ConfigParser()
-        config.read([join(self.__USER_CONFIG_DIR, 'tube4droid.conf'), expanduser('~/.tube4droid.conf'), 'tube4droid.conf'])
+        config.read([join(self.__CONFIG_DIR, 'tube4droid.conf'), join(self.__USER_CONFIG_DIR, 'tube4droid.conf'), 'tube4droid.conf'])
         self.__cwd = os.getcwd()
         self.__playlist = config.get('Config', 'playlist')
         self.__datadir = config.get('Config', 'mediadir')
         self.__serverdir = config.get('Config', 'rssdir')
         self.__serveruri = config.get('Config', 'serveruri')
-        self.__ytusername = config.get('Youtube', 'username')
-        self.__ytpassword = config.get('Youtube', 'password')
+        self.__ytusername = config.has_option('Youtube', 'username') and config.get('Youtube', 'username') or None
+        self.__ytpassword = config.has_option('Youtube', 'password') and config.get('Youtube', 'password') or None
+        self.__ydl_password_opt = ''
+
+
 
         self.ydl_opts = {
             #'format': 'bestaudio/best',
@@ -81,7 +84,6 @@ class Tube4Droid:
     def downloadVideos(self):
         """Downloads the videos from the selected playlist to the specified datadir"""
         with youtube_dl.YoutubeDL(self.ydl_opts) as ydl:
-            #ydl.download(['https://www.youtube.com/playlist?list=PLUeWws_6XlvfxEcYrDIVyqTsaWc4g7UGT'])
             ydl.download([self.__playlist])
 
     def createFeed(self):
