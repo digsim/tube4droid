@@ -33,7 +33,7 @@ class Tube4Droid:
 
         logging.basicConfig(level=logging.ERROR)
         logging.config.fileConfig(
-            [join(self.__USER_CONFIG_DIR, 'logging.conf'), expanduser('~/.logging.conf'), 'logging.conf'],
+            [join(self.__USER_CONFIG_DIR, 'logging.conf'), join(self.__USER_CONFIG_DIR, 'logging.conf'), 'logging.conf'],
             defaults={'logfilename': os.path.join(expanduser('~/.Tube4Droid'), 'tube4droid.log')})
         self.__log = logging.getLogger('Tube4Droid')
 
