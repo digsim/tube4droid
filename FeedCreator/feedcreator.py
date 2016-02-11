@@ -22,6 +22,7 @@ import mimetypes
 import youtube_dl
 import json
 import glob
+import re
 from rfeed import *
 
 class Tube4Droid:
@@ -122,7 +123,7 @@ class Tube4Droid:
                     link=self.__serveruri+filename,
                     description=description,
                     author=author,
-                    guid=Guid(self.__serveruri+filename),
+                    guid=Guid(self.__serveruri+re.sub('\d+_', '', filename)),
                     pubDate=datetime.datetime(int(uploaddate[0:4]), int(uploaddate[4:6]), int(uploaddate[6:8]), 10, 00),
                     categories=tags,
                     extensions = [itunes_item],
