@@ -17,6 +17,7 @@ except ImportError:
     DEVNULL = open(os.devnull, 'wb')
 from os.path import dirname, join, expanduser
 import datetime
+import time
 from colorama import Fore, Back, Style
 import mimetypes
 import youtube_dl
@@ -72,6 +73,7 @@ class Tube4Droid:
             'playliststart': 1,
             'writeinfojson': 'true',
             'writethumbnail': 'true',
+            'nooverwrites': 'true',
             'call_home': 'true',
             'logger': self.__log,
             'progress_hooks': [self._my_hook],
@@ -124,8 +126,8 @@ class Tube4Droid:
                     link=self.__serveruri+filename,
                     description=description,
                     author=author,
-                    guid=Guid(hashlib.sha512(self.__serveruri+re.sub('\d+_', '', filename)).hexdigest()),
-                    pubDate=datetime.datetime(int(uploaddate[0:4]), int(uploaddate[4:6]), int(uploaddate[6:8]), 10, 00),
+                    guid=Guid(hashlib.sha512((self.__serveruri+re.sub('\d+_', '', filename)).encode('utf-8')).hexdigest()),
+                    pubDate=datetime.datetime.strptime(time.ctime(os.path.getmtime(meta)), "%a %b %d %H:%M:%S %Y"),
                     categories=tags,
                     extensions = [itunes_item],
                     enclosure=enclosure
