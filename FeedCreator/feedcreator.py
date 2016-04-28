@@ -95,7 +95,9 @@ class Tube4Droid:
         self.__log.info(self.__datadir)
         rssitems = []
         metafiles = os.path.join(self.__datadir,"*.json")
-        for meta in glob.glob(metafiles):
+        metas = glob.glob(metafiles)
+        metas.sort(key=os.path.getmtime)
+        for meta in metas:
             self.__log.info("Processing item "+meta)
             with open(meta) as json_data:
                 itemdata = json.load(json_data)
