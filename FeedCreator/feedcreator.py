@@ -160,7 +160,7 @@ class Tube4Droid:
 
 
     def getArguments(self, argv):
-        self._checkPythonVersion();
+        self._checkPythonVersion()
         parser = argparse.ArgumentParser(prog='tube4droid',  description='Downloads the specififed youtoube list to a local directory and creates and Podcast RSS feed which can be susbscribed to get offline youtube on Android devices',  epilog='And that is how you use me')
         parser.add_argument("-p",  "--playlist",  help="youtoube playlist to mirror",  required=False, dest='playlist')
         parser.add_argument("-d",  "--datadir",  help="where downloaded files get stored",  required=False, dest='datadir')
@@ -195,7 +195,7 @@ class Tube4Droid:
             shutil.copy(join(self.__CONFIG_DIR, 'tube4droid.conf'), join(self.__USER_CONFIG_DIR, 'tube4droid.conf'))
 
 
-    def _exit_gracefully(self, signum, frame):
+    def _exit_gracefully(self):
         # restore the original signal handler as otherwise evil things will happen
         # in raw_input when CTRL+C is pressed, and our signal handler is not re-entrant
         signal.signal(signal.SIGINT, self.original_sigint)
