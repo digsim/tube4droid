@@ -128,7 +128,7 @@ class Tube4Droid:
                     link=self.__serveruri+filename,
                     description=description,
                     author=author,
-                    guid=Guid(hashlib.sha512((self.__serveruri+re.sub('\d+_', '', filename)).encode('utf-8')).hexdigest()),
+                    guid=Guid(hashlib.sha512((self.__serveruri+re.sub('^\d+_', '', filename)).encode('utf-8')).hexdigest()),
                     pubDate=datetime.datetime.strptime(time.ctime(os.path.getmtime(meta)), "%a %b %d %H:%M:%S %Y"),
                     categories=tags,
                     extensions = [itunes_item],
