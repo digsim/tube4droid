@@ -62,7 +62,7 @@ class MainImpl(Main):
                                          epilog='%(prog)s {command} -h for help on individual commands')
         parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + self.version)
         subparsers = parser.add_subparsers(help='commands', dest='command')
-        sync_parser = subparsers.add_parser('sync', help='sync calendar entries to ITC')
+        sync_parser = subparsers.add_parser('sync', help='sync videos to local directory')
         sync_parser.add_argument("-p", "--playlist", help="youtoube playlist to mirror", required=False, dest='playlist')
         sync_parser.add_argument("-d", "--datadir", help="where downloaded files get stored", required=False, dest='datadir')
         sync_parser.add_argument("-s", "--serverdir", help="where to put the created RSS feed file", required=False,
@@ -76,6 +76,8 @@ class MainImpl(Main):
         self.__playlist = args.playlist or self.__playlist
         self.__datadir = args.datadir or self.__datadir
         self.__serverdir = args.serverdir or self.__serverdir
+        self.__command = args.command or None
+
 
 
         if self.__command == 'sync':
