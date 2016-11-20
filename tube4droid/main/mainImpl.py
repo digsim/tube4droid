@@ -26,29 +26,6 @@ class MainImpl(Main):
         self.__ytpassword = self.config.has_option('Youtube', 'password') and self.config.get('Youtube', 'password') or None
         self.__ydl_password_opt = ''
 
-        self.ydl_opts = {
-            # 'format': 'bestaudio/best',
-            # 'postprocessors': [{
-            #    'key': 'FFmpegExtractAudio',
-            #    'preferredcodec': 'mp3',
-            #    'preferredquality': '192',
-            # }],
-            'username': self.__ytusername,
-            'password': self.__ytpassword,
-            # 'simulate': 'true',
-            # or use playlist_index
-            'outtmpl': os.path.join(self.__datadir, '%(title)s.%(ext)s'),
-            'restrictfilenames': 'true',
-            'playliststart': 1,
-            'writeinfojson': 'true',
-            'writethumbnail': 'true',
-            'nooverwrites': 'true',
-            'call_home': 'true',
-            'logger': self.__log,
-            'progress_hooks': [self._my_hook],
-        }
-
-
     def getArguments(self, argv):
         """
         Parses the command line arguments.
@@ -89,17 +66,9 @@ class MainImpl(Main):
 
     def doWork(self):
         """Overwrites the main"""
-        t4d = Tube4Droid()
+        t4d = Tube4Droid(self.__ytusername, self.__ytpassword, self.__datadir, self.__playlist, self.__serverdir, self.__serveruri)
         t4d.downloadVideos()
         t4d.createFeed()
-
-
-
-    def _my_hook(self, d):
-        if d['status'] == 'finished':
-            self.__log.info('Done downloading, now converting ...')
-
-
 
 
 if __name__ == "__main__":

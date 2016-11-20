@@ -28,8 +28,30 @@ import re
 from rfeed import *
 
 class Tube4Droid:
-    def __init__(self):
+    def __init__(self, username, password, datadir, playlist, serverdir, serveruri):
         self.__log = logging.getLogger('Tube4Droid')
+        self.__ytusername, self.__ytpassword, self.__datadir, self.__playlist, self.__serverdir, self.__serveruri = username, password, datadir, playlist, serverdir, serveruri
+        self.ydl_opts = {
+            # 'format': 'bestaudio/best',
+            # 'postprocessors': [{
+            #    'key': 'FFmpegExtractAudio',
+            #    'preferredcodec': 'mp3',
+            #    'preferredquality': '192',
+            # }],
+            'username': username,
+            'password': password,
+            # 'simulate': 'true',
+            # or use playlist_index
+            'outtmpl': os.path.join(datadir, '%(title)s.%(ext)s'),
+            'restrictfilenames': 'true',
+            'playliststart': 1,
+            'writeinfojson': 'true',
+            'writethumbnail': 'true',
+            'nooverwrites': 'true',
+            'call_home': 'true',
+            'logger': self.__log,
+            'progress_hooks': [self._my_hook],
+        }
 
     def downloadVideos(self):
         """Downloads the videos from the selected playlist to the specified datadir"""
@@ -102,8 +124,6 @@ class Tube4Droid:
         )
         rssfile = open(os.path.join(self.__serverdir, 'rss'), 'w')
         rssfile.write(feed.rss())
-
-
 
 
     def _my_hook(self, d):
