@@ -25,24 +25,29 @@ def read(fname):
 
 setup(
     name="tube4droid",
-    version="1.0.3",
+    version="1.4.dev0",
     author="Andreas Ruppen",
     author_email="andreas.ruppen@gmail.com",
     description="Creates an RSS feed from a youtoube playlist",
     license="Apache",
     keywords="youtube, iTunes, RSS, podcast",
     url="https://github.com/digsim/missingTvShows",
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    packages=find_packages(exclude=['contrib', 'docs', '*.tests*']),
     entry_points={
         'console_scripts': [
-            'tube4droid=FeedCreator:main',
+            'tube4droid=tube4droid.main:main',
         ],
     },
     cmdclass=cmdclass,
-    data_files=data_files,
+    #data_files=data_files,
+    #package_data = {'etc':'**/*'},
+    include_package_data = True,
     install_requires=reqs,
+    test_suite='nose.collector',
+    tests_require=['nose'],
     dependency_links=["git+https://github.com/svpino/rfeed.git#egg=rfeed"],
     long_description=read('README.md'),
+    zip_safe=True,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",

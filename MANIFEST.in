@@ -1,3 +1,8 @@
-include README.md
+include *.py
+include LICENSE
+recursive-include tube4droid *.ics
+recursive-include tube4droid *.py
+include *.rst *.md tox.ini
 include requirements.txt
-include etc/*
+include tube4droid/etc/*
+recursive-exclude tube4droid *.pyc *~

@@ -1,0 +1,2 @@
+--extra-index-url http://pypi.is-a-geek.com/simple
+rfeed==1.0.0
