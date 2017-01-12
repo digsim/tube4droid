@@ -4,7 +4,8 @@ Changelog
 1.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Completely switched to tox to release as a packaged app.
+- Lifted youtube_dl dependency to latest version.
 
 
 1.5 (2016-11-20)
